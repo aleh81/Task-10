@@ -5,7 +5,7 @@ namespace Task10.BLL.Services.Events
 	/// <summary>
 	/// This class using events
 	/// </summary>
-	public class Timer
+	public class Timer 
 	{
 		public delegate void DisplayHandler(object sender, TimerEventArgs e);
 

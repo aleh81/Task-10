@@ -1,49 +1,50 @@
-﻿using System;
+﻿using System.Threading;
 using Task10.BLL.Displays.Abstract;
-using Task10.BLL.Services.Delegates;
+using Timer = Task10.BLL.Services.Delegates.Timer;
 
 namespace Task10.BLL.Services
 {
 	public class Displayer
 	{
 		public Display DisaplayA { get; }
+
 		public Display DisplayB { get; }
 
-		public Displayer(Display a, Display b)
+		public int Milliseconds { get; }
+
+		public Displayer(Display a, Display b, int milliseconds)
 		{
 			DisaplayA = a;
 			DisplayB = b;
+			Milliseconds = milliseconds;
 		}
 
 		public void Using_Delegate(object obj)
 		{
-			var timer = new Timer(1000);
+			var timer = new Timer(Milliseconds);
 
 			timer.StartTime += DisaplayA.Show;
 			timer.EndTime += DisplayB.Show;
 
 			for (var i = 0; i < 5; i++)
 			{
+				Thread.Sleep(20);
 				timer.Begin(); ;
 			}
-
-			Console.ResetColor();
-			Console.WriteLine();
 		}
 
 		public void Using_Event(object obj)
 		{
-			var eventTimer = new Events.Timer(1000);
+			var timer = new Events.Timer(Milliseconds);
 
-			eventTimer.StartTime += DisaplayA.Show_EventArgs;
-			eventTimer.EndTime += DisplayB.Show_EventArgs;
+			timer.StartTime += DisaplayA.Show_EventArgs;
+			timer.EndTime += DisplayB.Show_EventArgs;
 
 			for (var i = 0; i < 5; i++)
 			{
-				eventTimer.Begin();
+				timer.Begin();
 			}
 
-			Console.WriteLine();
 		}
 	}
 }
