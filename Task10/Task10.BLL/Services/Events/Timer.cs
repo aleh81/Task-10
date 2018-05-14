@@ -1,4 +1,6 @@
-﻿using System.Threading;
+﻿using System;
+using System.Reflection;
+using System.Threading;
 
 namespace Task10.BLL.Services.Events
 {
@@ -19,6 +21,18 @@ namespace Task10.BLL.Services.Events
 		public int MilliSeconds { get; }
 
 		public object GetTargetStartTimer => StartTime?.Target;
+
+		public object GetTargetEndTimer => EndTime?.Target;
+
+		public MethodInfo GetMethodStartTimer => StartTime?.Method;
+
+		public MethodInfo GetMethodEndtimer => EndTime?.Method;
+
+		public Delegate[] GetInvocationListStartTimer =>
+			StartTime?.GetInvocationList();
+
+		public Delegate[] GetInvocationListEndTimer =>
+			EndTime?.GetInvocationList();
 
 		public Timer(int miliSecods)
 		{

@@ -20,20 +20,6 @@ namespace Task10.BLL.Services.Delegates
 
 		public int MilliSeconds { get; }
 
-		public object GetTargetStartTimer => StartTime?.Target;
-
-		public object GetTargetEndTimer => EndTime?.Target;
-
-		public MethodInfo GetMethodStartTimer => StartTime?.Method;
-
-		public MethodInfo GetMethodEndtimer => EndTime?.Method;
-
-		public Delegate[] GetInvocationListStartTimer =>
-			StartTime?.GetInvocationList();
-
-		public Delegate[] GetInvocationListEndTimer =>
-			EndTime?.GetInvocationList();
-
 		public Timer(int miliSecods)
 		{
 			MilliSeconds = miliSecods;

@@ -40,7 +40,7 @@ namespace Task10.BLL.Services
 		public void Using_Event(object obj)
 		{
 			var timer = new Events.Timer(Milliseconds);
-
+			
 			timer.StartTime += DisaplayA.Show_EventArgs;
 			timer.EndTime += DisplayB.Show_EventArgs;
 
