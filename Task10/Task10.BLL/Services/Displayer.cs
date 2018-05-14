@@ -26,6 +26,10 @@ namespace Task10.BLL.Services
 			timer.StartTime += DisaplayA.Show;
 			timer.EndTime += DisplayB.Show;
 
+			//timer.StartTime.Invoke("Hello");
+			//That is why better using events.
+			//Because external code has access.
+
 			for (var i = 0; i < 5; i++)
 			{
 				Thread.Sleep(20);
@@ -40,11 +44,14 @@ namespace Task10.BLL.Services
 			timer.StartTime += DisaplayA.Show_EventArgs;
 			timer.EndTime += DisplayB.Show_EventArgs;
 
+			//timer.StartTime.Invoke("Hello");
+			//this execute imposible, external code has not acess
+			//bicause this event.
+
 			for (var i = 0; i < 5; i++)
 			{
 				timer.Begin();
 			}
-
 		}
 	}
 }

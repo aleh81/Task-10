@@ -11,9 +11,9 @@ namespace Task10.BLL.Services.Delegates
 	{
 		public delegate void DisplayHandler(string message);
 
-		public DisplayHandler StartTime { get; set; }
+		public DisplayHandler StartTime { get; set; } = null;
 
-		public DisplayHandler EndTime { get; set; }
+		public DisplayHandler EndTime { get; set; } = null;
 
 		private const string EndTimerMessage = "Timer stop";
 		private const string StartTimerMessage = "Timer start";
