@@ -9,8 +9,6 @@ namespace Task10.BLL.Services
 		public Display DisaplayA { get; }
 		public Display DisplayB { get; }
 
-		public delegate void EventHandler(Display a, Display b);
-
 		public Displayer(Display a, Display b)
 		{
 			DisaplayA = a;
