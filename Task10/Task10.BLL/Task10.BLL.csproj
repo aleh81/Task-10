@@ -44,10 +44,11 @@
     <Compile Include="Displays\BlueDisplay.cs" />
     <Compile Include="Displays\RedDisplay.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\Timer.cs" />
+    <Compile Include="Services\Delegates\Timer.cs" />
+    <Compile Include="Services\Displayer.cs" />
+    <Compile Include="Services\Events\Timer.cs" />
+    <Compile Include="Services\Events\TimerEventArgs.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="EventServices\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

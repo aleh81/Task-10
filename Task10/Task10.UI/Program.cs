@@ -1,6 +1,7 @@
 ﻿using System;
-using Timer = Task10.BLL.Services.Timer;
+using System.Threading;
 using Task10.BLL.Displays;
+using Task10.BLL.Services;
 
 namespace Task10.UI
 {
@@ -8,18 +9,26 @@ namespace Task10.UI
 	{
 		static void Main(string[] args)
 		{
-			var timer = new Timer(1000);
-
 			var redDisplay = new RedDisplay();
 			var blueDisplay = new BlueDisplay();
 
-			timer.RegisterHandler(redDisplay.Show);
-			timer.RegisterHandler(blueDisplay.Show);
+			var displayer = new Displayer(redDisplay, blueDisplay);
 
-			for(var i=0; i<5; i++)
-			{
-				timer.Start();
-			}
+			#region Timer using events
+
+			var evMethThread = new Thread(new ParameterizedThreadStart
+				(displayer.Using_Event));
+			evMethThread.Start();
+
+			#endregion
+
+			#region Timer using delegate
+
+			var delMethThread = new Thread(new ParameterizedThreadStart
+				(displayer.Using_Delegate));
+			delMethThread.Start();
+
+			#endregion
 
 			Console.Read();
 		}
