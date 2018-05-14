@@ -11,8 +11,6 @@ namespace Task10.BLL.Services
 
 		public delegate void EventHandler(Display a, Display b);
 
-		public delegate void DelegeateMeth(Display a, Display b);
-
 		public Displayer(Display a, Display b)
 		{
 			DisaplayA = a;
