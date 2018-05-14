@@ -1,56 +1,41 @@
 ﻿using System;
-using System.Threading;
 using Task10.BLL.Displays;
-using Task10.BLL.Services;
+using Task10.BLL.Displays.Abstract;
+using TimerEvent = Task10.BLL.Services.Events.Timer;
 
 namespace Task10.UI
 {
 	class Program
 	{
-		public const int Milliseconds = 1000;
+		public const int Seconds = 10;
 
 		static void Main(string[] args)
 		{
 			var redDisplay = new RedDisplay();
 			var blueDisplay = new BlueDisplay();
 
-			var displayer = new Displayer
-				(redDisplay, blueDisplay, Milliseconds);
+			#region Test Events
 
-			#region Timer using events
-
-			var evMethThread = new Thread
-				(new ParameterizedThreadStart(displayer.Using_Event));
-			evMethThread.Start();
-
-			#endregion
-
-			#region Timer using delegate
-
-			var delMethThread = new Thread
-			(new ParameterizedThreadStart
-				(displayer.Using_Delegate));
-			delMethThread.Start();
-
-			#endregion
-
-			#region Main Thread
-
-			MainThread();
+				TestEvents(redDisplay, blueDisplay);
 
 			#endregion
 
 			Console.Read();
 		}
 
-		private static void MainThread()
+		private static void TestEvents(Display displayA, Display displayB)
 		{
-			for (var i = 0; i < 5; i++)
-			{
-				Thread.Sleep(1000);
-				Console.ForegroundColor = ConsoleColor.Yellow;
-				Console.WriteLine(new string(' ', 35) + "Main Thread");
-			}
+			var timer = new TimerEvent(Seconds);
+
+			timer.Tick += displayA.Show_Ticks;
+			timer.StartTime += displayA.Show_EventArgs;
+			timer.EndTime += displayA.Show_EventArgs;
+
+			timer.Tick += displayB.Show_Ticks;
+			timer.StartTime += displayB.Show_EventArgs;
+			timer.EndTime += displayB.Show_EventArgs;
+
+			timer.Begin();
 		}
 	}
 }

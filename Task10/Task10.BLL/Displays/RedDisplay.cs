@@ -10,14 +10,21 @@ namespace Task10.BLL.Displays
 		{
 			Console.ResetColor();
 			Console.ForegroundColor = ConsoleColor.Red;
-			Console.WriteLine(text);
+			Console.WriteLine(new string(' ', 45) + text);
 		}
 
 		public override void Show_EventArgs(object sender, TimerEventArgs e)
 		{
 			Console.ResetColor();
 			Console.ForegroundColor = ConsoleColor.Red;
-			Console.WriteLine(new string(' ', 15) + e.Message);
+			Console.WriteLine(new string(' ', 25) + e.Message +
+							  " " + e.Seconds + " seconds");
+		}
+
+		public override void Show_Ticks(object sender, TimerEventArgs e)
+		{
+			Console.ForegroundColor = ConsoleColor.Red;
+			Console.WriteLine( new string(' ', 25) + e.Seconds);
 		}
 	}
 }

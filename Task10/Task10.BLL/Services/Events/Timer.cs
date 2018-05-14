@@ -7,7 +7,7 @@ namespace Task10.BLL.Services.Events
 	/// <summary>
 	/// This class using events
 	/// </summary>
-	public class Timer 
+	public class Timer
 	{
 		public delegate void DisplayHandler(object sender, TimerEventArgs e);
 
@@ -15,10 +15,9 @@ namespace Task10.BLL.Services.Events
 
 		public event DisplayHandler EndTime;
 
-		private const string EndTimerMessage = "Timer stop";
-		private const string StartTimerMessage = "Timer start";
+		public event DisplayHandler Tick;
 
-		public int MilliSeconds { get; }
+		public int Seconds { get; private set; }
 
 		public object GetTargetStartTimer => StartTime?.Target;
 
@@ -28,24 +27,71 @@ namespace Task10.BLL.Services.Events
 
 		public MethodInfo GetMethodEndtimer => EndTime?.Method;
 
+		public MethodInfo GetMethodTick => Tick?.Method;
+
 		public Delegate[] GetInvocationListStartTimer =>
 			StartTime?.GetInvocationList();
 
 		public Delegate[] GetInvocationListEndTimer =>
 			EndTime?.GetInvocationList();
 
-		public Timer(int miliSecods)
+		public Delegate[] GetInvocationListTick =>
+			Tick?.GetInvocationList();
+
+		public Timer(int seconds)
 		{
-			MilliSeconds = miliSecods;
+			Seconds = seconds;
 		}
 
 		public void Begin()
 		{
-			StartTime?.Invoke(this, new TimerEventArgs(StartTimerMessage));
+			var stop = false;
 
-			Thread.Sleep(MilliSeconds);
+			var thread = new Thread(new ThreadStart(() =>
+			{
+				while (!stop)
+				{
+					var timerState = "Start";
 
-			EndTime?.Invoke(this, new TimerEventArgs(EndTimerMessage));
+					OnStart(this, new TimerEventArgs
+						(timerState, Seconds));
+
+					do
+					{
+
+						OnTick(this, new TimerEventArgs(timerState, Seconds));
+						Seconds--;
+
+						Thread.Sleep(1000);
+
+						timerState = "During";
+
+					} while (Seconds > 0);
+
+					stop = true;
+					timerState = "End";
+
+					OnEnd(this, new TimerEventArgs
+						(timerState, Seconds));
+				}
+			}));
+
+			thread.Start();
+		}
+
+		protected virtual void OnTick(object sender, TimerEventArgs e)
+		{
+			Tick?.Invoke(sender, e);
+		}
+
+		protected virtual void OnStart(object sender, TimerEventArgs e)
+		{
+			StartTime?.Invoke(sender, e);
+		}
+
+		protected virtual void OnEnd(object sender, TimerEventArgs e)
+		{
+			EndTime?.Invoke(sender, e);
 		}
 	}
 }

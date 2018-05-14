@@ -7,5 +7,7 @@ namespace Task10.BLL.Displays.Abstract
 		public abstract void Show(string text);
 
 		public abstract void Show_EventArgs(object sender, TimerEventArgs e);
+
+		public abstract void Show_Ticks(object sender, TimerEventArgs e);
 	}
 }

@@ -17,7 +17,14 @@ namespace Task10.BLL.Displays
 		{
 			Console.ResetColor();
 			Console.ForegroundColor = ConsoleColor.Blue;
-			Console.WriteLine(new string(' ', 15) + e.Message);
+			Console.WriteLine(e.Message +
+			                  " " + e.Seconds + " seconds");
+		}
+
+		public override void Show_Ticks(object sender, TimerEventArgs e)
+		{
+			Console.ForegroundColor = ConsoleColor.Blue;
+			Console.WriteLine(e.Seconds);
 		}
 	}
 }

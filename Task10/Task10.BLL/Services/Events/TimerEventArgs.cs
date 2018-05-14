@@ -5,9 +5,12 @@ namespace Task10.BLL.Services.Events
 	{
 		public string Message { get; }
 
-		public TimerEventArgs(string message)
+		public int Seconds { get; }
+
+		public TimerEventArgs(string message, int seconds)
 		{
 			Message = message;
+			Seconds = seconds;
 		}
 	}
 }
